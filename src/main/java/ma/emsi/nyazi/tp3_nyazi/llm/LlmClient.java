@@ -15,15 +15,15 @@ public class LlmClient {
         @SystemMessage("""
         Tu es un guide touristique expert.
         N'utilise pas Markdown.
-        Tu dois indiquer STRICTEMENT 2 endroits à visiter, pas plus. Donne uniquement la réponse au format JSON suivant:
+        Tu dois indiquer STRICTEMENT le nombre d'endroits donné par l'utilisateur. Donne uniquement la réponse au format JSON suivant:
         {
           "ville_ou_pays": "nom",
-          "endroits_a_visiter": ["endroit 1","endroit 2"],
+          "endroits_a_visiter": ["endroit 1","endroit 2", ...],
           "prix_moyen_repas": "<prix> <devise>"
         }
     """)
-        @UserMessage("Donne des informations touristiques sur : {{ville_ou_pays}}")
-        String genererGuide(@V("ville_ou_pays") String ville_ou_pays);
+        @UserMessage("Donne des informations touristiques sur : {{ville_ou_pays}} Nombre d'endroits à visiter : {{nb}}")
+        String genererGuide(@V("ville_ou_pays") String ville_ou_pays, @V("nb") int nb);
     }
 
     private final GuideTouristique guideTouristique;
